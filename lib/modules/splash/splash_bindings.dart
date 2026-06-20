@@ -1,0 +1,10 @@
+import 'package:gelir_gider_app/modules/splash/splash_controller.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/utils.dart';
+
+class SplashBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(SplashController());
+  }
+}
