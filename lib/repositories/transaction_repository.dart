@@ -40,7 +40,7 @@ class TransactionRepository extends GetxService {
     final response = await _apiService.delete(
       "${ApiConstants.transactions}/$id",
     );
-    if (response.data == 200) {
+    if (response.statusCode == 200) {
       return true;
     }
     throw Exception("Transaction silinemedi");

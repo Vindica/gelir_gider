@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gelir_gider_app/core/base_controller.dart';
 import 'package:gelir_gider_app/models/app_category.dart';
 import 'package:gelir_gider_app/models/transactions_params.dart';
+import 'package:gelir_gider_app/modules/dashboard/dashboard_controller.dart';
 import 'package:gelir_gider_app/repositories/category_repository.dart';
 import 'package:gelir_gider_app/repositories/transaction_repository.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,9 @@ class TransactionController extends BaseController {
 
       var result = await _transactionRepository.createTransaction(transaction);
       if (result != null) {
+        Get.find<DashboardController>().refreshDashboard();
         Get.back();
+
         showSuccessSnackbar(message: "Transaction olusturuldu");
         clearForm();
       }
