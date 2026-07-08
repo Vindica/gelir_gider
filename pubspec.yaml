@@ -1,5 +1,5 @@
 name: gelir_gider_app
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -37,6 +37,10 @@ dependencies:
   get: ^4.7.3
   shared_preferences: ^2.5.5
   dio: ^5.9.2
+  google_sign_in: ^6.2.1
+  google_fonts: ^8.1.0
+  animated_bottom_navigation_bar: ^1.4.0
+  intl: ^0.20.3
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +58,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

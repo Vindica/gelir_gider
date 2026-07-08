@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class StorageKeys {
   static const String userToken = "user_token";
+  static const String themeMod = "theme_mode";
 }
 
 class StorageService extends GetxController {
@@ -38,15 +39,15 @@ class StorageService extends GetxController {
   T? getValue<T>(String key) {
     try {
       if (T == String) {
-        return _preferences.getString(key) as T;
+        return _preferences.getString(key) as T?;
       } else if (T == int) {
-        return _preferences.getInt(key) as T;
+        return _preferences.getInt(key) as T?;
       } else if (T == double) {
-        return _preferences.getDouble(key) as T;
+        return _preferences.getDouble(key) as T?;
       } else if (T == bool) {
-        return _preferences.getBool(key) as T;
+        return _preferences.getBool(key) as T?;
       } else if (T == List<String>) {
-        return _preferences.getStringList(key) as T;
+        return _preferences.getStringList(key) as T?;
       } else {
         throw ArgumentError("Desteklenmeyen veri türü.");
       }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelir_gider_app/core/app_bindings.dart';
 import 'package:gelir_gider_app/routes/app_pages.dart';
+import 'package:gelir_gider_app/themes/app_theme.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
@@ -13,9 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "",
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
+      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       initialBinding: AppBindings(),
     );
   }

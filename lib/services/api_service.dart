@@ -4,8 +4,13 @@ import 'package:gelir_gider_app/services/storage_service.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
 
-abstract class ApiConstantsas {
-  static const baseUrl = "";
+abstract class ApiConstants {
+  static const String baseUrl = 'https://gelir-gider-backend.onrender.com/api';
+  static const String login = '/auth/google';
+  static const String profile = '/auth/profile';
+  static const String categories = '/categories';
+  static const String transactions = '/transactions';
+  static const String serverClientId = '106928828018-mpl2p1mjmq9p8ptikc4jubh1do7665hn.apps.googleusercontent.com';
 }
 
 class ApiService extends GetxService {
@@ -16,9 +21,9 @@ class ApiService extends GetxService {
     _storageService = Get.find<StorageService>();
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiConstantsas.baseUrl,
-        connectTimeout: Duration(seconds: 10),
-        receiveTimeout: Duration(seconds: 10),
+        baseUrl: ApiConstants.baseUrl,
+        connectTimeout: Duration(seconds: 60),
+        receiveTimeout: Duration(seconds: 60),
         contentType: "application/json",
       ),
     );

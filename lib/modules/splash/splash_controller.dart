@@ -1,24 +1,35 @@
-import 'package:flutter/rendering.dart';
 import 'package:gelir_gider_app/core/base_controller.dart';
+import 'package:gelir_gider_app/routes/app_pages.dart';
 import 'package:gelir_gider_app/services/api_service.dart';
+import 'package:gelir_gider_app/services/auth_service.dart';
 import 'package:gelir_gider_app/services/storage_service.dart';
 import 'package:get/get.dart';
 
 class SplashController extends BaseController {
-  final areServicesReady = false.obs;
+  // final areServicesReady = false.obs;
   @override
   void onReady() async {
     super.onReady();
-    await checkServices();
-    areServicesReady.value = true;
+    await waitForServices();
+    // areServicesReady.value = true;
+    await checkTokenAndRedirect();
   }
 
-  Future<void> checkServices() async {
-    while (!Get.isRegistered<StorageService>() &&
-        !Get.isRegistered<ApiService>()) {
+  Future<void> waitForServices() async {
+    while (!Get.isRegistered<StorageService>() ||
+        !Get.isRegistered<ApiService>() ||
+        !Get.isRegistered<AuthService>()) {
       await Future.delayed(Duration(seconds: 1));
     }
-    var map = Get.find<StorageService>().getAllValues();
-    debugPrint(map.toString());
+  }
+
+  Future<void> checkTokenAndRedirect() async {
+    final _authService = Get.find<AuthService>();
+    final isAuthenticated = await _authService.isAuthenticated();
+    if (isAuthenticated) {
+      Get.offAllNamed(AppRoutes.home);
+    } else {
+      Get.offAllNamed(AppRoutes.login);
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gelir_gider_app/modules/login/login_controller.dart';
+import 'package:get/state_manager.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
 
   @override
@@ -8,7 +10,9 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            await controller.googleIleGirisYap();
+          },
           child: Text("Google ile giris yap"),
         ),
       ),

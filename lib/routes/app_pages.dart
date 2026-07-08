@@ -4,6 +4,8 @@ import 'package:gelir_gider_app/modules/login/login_bindings.dart';
 import 'package:gelir_gider_app/modules/login/login_page.dart';
 import 'package:gelir_gider_app/modules/splash/splash_bindings.dart';
 import 'package:gelir_gider_app/modules/splash/splash_page.dart';
+import 'package:gelir_gider_app/modules/transactions/transaction_binding.dart';
+import 'package:gelir_gider_app/modules/transactions/transaction_page.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 abstract class AppRoutes {
@@ -12,6 +14,7 @@ abstract class AppRoutes {
   static const login = '/login';
   static const home = '/home';
   static const profile = '/profile';
+  static const transaction = '/transaction';
 }
 
 class AppPages {
@@ -30,6 +33,11 @@ class AppPages {
       name: AppRoutes.home,
       page: () => HomePage(),
       binding: HomeBindings(),
+    ),
+    GetPage(
+      name: AppRoutes.transaction,
+      page: () => TransactionPage(),
+      binding: TransactionBinding(),
     ),
   ];
 }
