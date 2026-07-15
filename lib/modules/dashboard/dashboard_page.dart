@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gelir_gider_app/modules/dashboard/dashboard_controller.dart';
+import 'package:gelir_gider_app/modules/dashboard/widgets/summary_card.dart';
 import 'package:gelir_gider_app/modules/dashboard/widgets/transaction_list.dart';
+import 'package:gelir_gider_app/themes/app_colors.dart';
 import 'package:get/get.dart';
 
 class DashboardPage extends GetView<DashboardController> {
@@ -12,7 +14,64 @@ class DashboardPage extends GetView<DashboardController> {
       body: Obx(
         () => controller.isLoading
             ? Center(child: CircularProgressIndicator())
-            : TransactionList(),
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Obx(
+                      () => ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        children: [
+                          SummaryCard(
+                            title: 'Aylik gelir',
+                            amount: controller.aylikGelir.value,
+                            icon: Icons.arrow_upward,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkIncome
+                                : AppColors.income,
+                            gradientColors:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkIncomeGradient
+                                : AppColors.incomeGradient,
+                          ),
+                          SummaryCard(
+                            title: 'Aylik gider',
+                            amount: controller.aylikGider.value,
+                            icon: Icons.arrow_downward,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkExpense
+                                : AppColors.expense,
+                            gradientColors:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkExpenseGradient
+                                : AppColors.expenseGradient,
+                          ),
+                          SummaryCard(
+                            title: 'Aylik bakiye',
+                            amount:
+                                (controller.aylikGelir.value -
+                                controller.aylikGider.value),
+                            icon: Icons.account_balance_wallet,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkBalance
+                                : AppColors.balance,
+                            gradientColors:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkBalanceGradient
+                                : AppColors.balanceGradient,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(flex: 9, child: TransactionList()),
+                ],
+              ),
       ),
     );
   }

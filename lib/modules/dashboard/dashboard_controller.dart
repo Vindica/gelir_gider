@@ -13,6 +13,39 @@ class DashboardController extends BaseController {
   final myTransactions = <AppTransaction>[].obs;
   final myCategories = <AppCategory>[].obs;
 
+  final aylikGelir = 0.0.obs;
+  final aylikGider = 0.0.obs;
+
+  void aylikOzet() {
+    aylikGelir.value = 0;
+    aylikGider.value = 0;
+    var simdikiTarih = DateTime.now();
+    var oankiYil = simdikiTarih.year;
+    var oankiAy = simdikiTarih.month;
+
+    if (myTransactions.isNotEmpty) {
+      var filteredTransaction = myTransactions
+          .where(
+            (transaction) =>
+                transaction.date!.year == oankiYil &&
+                transaction.date!.month == oankiAy,
+          )
+          .toList();
+      for (var tr in filteredTransaction) {
+        if (tr.type == "income") {
+          aylikGelir.value += tr.amount!;
+        } else {
+          aylikGider.value += tr.amount!;
+        }
+      }
+    } else {
+      aylikGelir.value = 0;
+      aylikGider.value = 0;
+    }
+
+    debugPrint("aylik gelir $aylikGelir --- aylik gider $aylikGider");
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -44,6 +77,7 @@ class DashboardController extends BaseController {
       setLoading(true);
       final transactions = await _transactionRepository.getTransactions();
       myTransactions.value = transactions;
+      aylikOzet();
     } catch (e) {
       showErrorSnackbar(message: "Veriler getirilirken hata olustu");
     } finally {
@@ -59,6 +93,7 @@ class DashboardController extends BaseController {
       );
       if (transactionResult) {
         myTransactions.removeWhere((element) => element.id == id);
+        aylikOzet();
         showSuccessSnackbar(message: "Transaction silindi");
       } else {
         showErrorSnackbar(message: "Transaction silinemedi");
@@ -70,17 +105,15 @@ class DashboardController extends BaseController {
     }
   }
 
-  // Arayüzde ID'yi verip Kategori İsmini geri alacağımız yardımcı fonksiyon
-  String getCategoryName(String? categoryId) {
-    if (categoryId == null) return "Bilinmeyen Kategori";
+  // Arayüzde ID'yi verip Kategori nesnesini (AppCategory) geri alacağımız yardımcı fonksiyon
+  AppCategory getCategory(String? categoryId) {
+    if (categoryId == null) return AppCategory(name: "Bilinmeyen Kategori");
 
     // myCategories listesinde, id'si bizim aradığımız categoryId ile eşleşen ilk elemanı bulur
-    final category = myCategories.firstWhere(
+    return myCategories.firstWhere(
       (cat) => cat.id == categoryId,
       orElse: () =>
           AppCategory(name: "Bilinmeyen Kategori"), // Bulamazsa default değer
     );
-
-    return category.name ?? "Bilinmeyen Kategori";
   }
 }

@@ -3,6 +3,7 @@ import 'package:gelir_gider_app/modules/dashboard/dashboard_controller.dart';
 import 'package:gelir_gider_app/themes/app_colors.dart';
 import 'package:gelir_gider_app/utils/icon_helper.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TransactionList extends GetView<DashboardController> {
   const TransactionList({super.key});
@@ -42,13 +43,14 @@ class TransactionList extends GetView<DashboardController> {
         );
       }
       return Card(
+        shape: BeveledRectangleBorder(),
         child: ListView.separated(
           itemBuilder: (context, index) {
             var oankiTransaction = controller.myTransactions[index];
             var categoryId = oankiTransaction.categoryId;
 
-            // Controller'daki metodumuzu kullanarak ID'den İsim alıyoruz
-            var categoryName = controller.getCategoryName(categoryId);
+            // Controller'daki metodumuzu kullanarak ID'den AppCategory nesnesini alıyoruz
+            var category = controller.getCategory(categoryId);
 
             return Dismissible(
               key: ValueKey(oankiTransaction.id),
@@ -63,8 +65,62 @@ class TransactionList extends GetView<DashboardController> {
                 controller.deleteTransaction(oankiTransaction.id!);
               },
               child: ListTile(
-                title: Text(categoryName),
-                subtitle: Text(oankiTransaction.description!),
+                leading: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? (oankiTransaction.type == "income")
+                              ? AppColors.darkIncome.withAlpha(25)
+                              : AppColors.darkExpense.withAlpha(25)
+                        : (oankiTransaction.type == "income")
+                        ? AppColors.income.withAlpha(25)
+                        : AppColors.expense.withAlpha(25),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    getCategoryIcon(
+                      iconName: category.icon!,
+                      isSystem: true,
+                      type: category.type!,
+                    ),
+                    color: oankiTransaction.type == "income"
+                        ? (Theme.of(context).brightness == Brightness.dark)
+                              ? AppColors.darkIncome
+                              : AppColors.income
+                        : (Theme.of(context).brightness == Brightness.dark)
+                        ? AppColors.darkExpense
+                        : AppColors.expense,
+                  ),
+                ),
+                title: Text(category.name ?? "Bilinmeyen Kategori"),
+                subtitle: Text(oankiTransaction.description ?? ""),
+                trailing: Column(
+                  children: [
+                    Text(
+                      "${oankiTransaction.type == "income" ? "+" : "-"} ${NumberFormat.currency(symbol: "₺", decimalDigits: 2).format(oankiTransaction.amount)}",
+                      style: TextStyle(
+                        color: oankiTransaction.type == "income"
+                            ? (Theme.of(context).brightness == Brightness.dark)
+                                  ? AppColors.darkIncome
+                                  : AppColors.income
+                            : (Theme.of(context).brightness == Brightness.dark)
+                            ? AppColors.darkExpense
+                            : AppColors.expense,
+                        fontSize: 20,
+                        fontWeight: .bold,
+                      ),
+                    ),
+                    Text(
+                      DateFormat('dd/MM/yyyyy').format(oankiTransaction.date!),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
