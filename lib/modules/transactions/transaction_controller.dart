@@ -46,6 +46,7 @@ class TransactionController extends BaseController {
       );
 
       var result = await _transactionRepository.createTransaction(transaction);
+      // ignore: unnecessary_null_comparison
       if (result != null) {
         Get.find<DashboardController>().refreshDashboard();
         Get.back();

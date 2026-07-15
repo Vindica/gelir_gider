@@ -1,9 +1,7 @@
-import 'package:gelir_gider_app/models/app_category.dart';
 import 'package:gelir_gider_app/models/app_transaction.dart';
 import 'package:gelir_gider_app/models/transactions_params.dart';
 import 'package:gelir_gider_app/services/api_service.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class TransactionRepository extends GetxService {
   late final ApiService _apiService;

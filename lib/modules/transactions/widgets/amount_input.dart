@@ -26,6 +26,7 @@ class AmountInput extends GetView<TransactionController> {
         if (amount == null || amount <= 0) {
           return "Gecersiz veri";
         }
+        return null;
       },
     );
   }

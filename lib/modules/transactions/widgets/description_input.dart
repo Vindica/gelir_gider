@@ -21,6 +21,7 @@ class DescriptionInput extends GetView<TransactionController> {
         if (value == null || value.isEmpty) {
           return "Bir aciklama giriniz";
         }
+        return null;
       },
     );
   }

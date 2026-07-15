@@ -22,15 +22,15 @@ class AuthService extends GetxService {
   Future<AppUser?> signInWithGoogle() async {
     try {
       await _googleSignIn.signOut();
-      final GoogleSignInAccount? _googleUser = await _googleSignIn.signIn();
-      if (_googleUser == null) return null;
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) return null;
 
-      final GoogleSignInAuthentication _googleAuthentication =
-          await _googleUser.authentication;
-      debugPrint("google auth: ${_googleAuthentication.idToken}");
+      final GoogleSignInAuthentication googleAuthentication =
+          await googleUser.authentication;
+      debugPrint("google auth: ${googleAuthentication.idToken}");
       final response = await _apiService.post(
         ApiConstants.login,
-        data: {'idToken': _googleAuthentication.idToken},
+        data: {'idToken': googleAuthentication.idToken},
       );
       if (response.statusCode == 200) {
         await _storageService.setValue<String>(
