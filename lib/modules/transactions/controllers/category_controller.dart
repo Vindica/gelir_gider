@@ -24,7 +24,7 @@ class CategoryController extends BaseController {
 
   Future<void> createCategory() async {
     try {
-      if (formKey.currentState!.validate()) return;
+      if (!formKey.currentState!.validate()) return;
       setLoading(true);
       var eklenecekKategori = AppCategory(
         name: categoryName.value,

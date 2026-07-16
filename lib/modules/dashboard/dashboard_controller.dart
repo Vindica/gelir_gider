@@ -42,8 +42,6 @@ class DashboardController extends BaseController {
       aylikGelir.value = 0;
       aylikGider.value = 0;
     }
-
-    debugPrint("aylik gelir $aylikGelir --- aylik gider $aylikGider");
   }
 
   @override
