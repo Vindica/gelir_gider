@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SummaryCard extends StatelessWidget {
   final String title;
@@ -6,6 +7,7 @@ class SummaryCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final List<Color> gradientColors;
+  final bool isaretGosterilsinMi;
   const SummaryCard({
     super.key,
     required this.title,
@@ -13,26 +15,54 @@ class SummaryCard extends StatelessWidget {
     required this.icon,
     required this.color,
     required this.gradientColors,
+    this.isaretGosterilsinMi = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final amountFormat = NumberFormat.currency(symbol: "₺", decimalDigits: 2);
+
     return Container(
       width: 150,
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Padding(
         padding: EdgeInsets.all(12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 16),
-                Expanded(child: Text(title)),
+                Icon(icon, size: 16, color: Colors.white),
+                SizedBox(width: 4),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ],
             ),
-            Text(amount.toString()),
+            Spacer(),
+            Text(
+              "${isaretGosterilsinMi && amount > 0 ? "+" : ""}${amountFormat.format(amount)}",
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

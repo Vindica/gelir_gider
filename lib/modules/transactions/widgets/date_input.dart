@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gelir_gider_app/modules/transactions/transaction_controller.dart';
+import 'package:gelir_gider_app/modules/transactions/controllers/transaction_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

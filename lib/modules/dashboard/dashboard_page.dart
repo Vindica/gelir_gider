@@ -51,6 +51,7 @@ class DashboardPage extends GetView<DashboardController> {
                                 : AppColors.expenseGradient,
                           ),
                           SummaryCard(
+                            isaretGosterilsinMi: true,
                             title: 'Aylik bakiye',
                             amount:
                                 (controller.aylikGelir.value -

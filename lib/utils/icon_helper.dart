@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 
+final List<String> icons = [
+  'wallet',
+  'cash',
+  'trending-up',
+  'cart',
+  'receipt',
+  'bus',
+  'medical',
+  'school',
+  'game-controller',
+  'restaurant',
+];
+
 IconData getCategoryIcon({
   required String iconName,
   required bool isSystem,
