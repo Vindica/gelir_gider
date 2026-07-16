@@ -5,12 +5,13 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
 
 abstract class ApiConstants {
-  static const String baseUrl = 'https://gelir-gider-backend.onrender.com/api';
+  static const String baseUrl = 'https://gelir-gider-api-gi2s.onrender.com/api';
   static const String login = '/auth/google';
   static const String profile = '/auth/profile';
   static const String categories = '/categories';
   static const String transactions = '/transactions';
-  static const String serverClientId = '106928828018-mpl2p1mjmq9p8ptikc4jubh1do7665hn.apps.googleusercontent.com';
+  static const String serverClientId =
+      '106928828018-mpl2p1mjmq9p8ptikc4jubh1do7665hn.apps.googleusercontent.com';
 }
 
 class ApiService extends GetxService {
